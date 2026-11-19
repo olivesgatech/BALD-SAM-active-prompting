@@ -1,0 +1,20 @@
+{
+  "format": "bald_laplace_v1",
+  "covariance": "full",
+  "curvature_weighting": "class_weighted",
+  "pos_weight": 6.598526030722233,
+  "n_eff": 100000.0,
+  "prior_precision": 1.0,
+  "n_params": 17,
+  "n_sets_fit": 4096,
+  "n_pixels_fit": 268435456,
+  "data_share_min": 0.9914499654174247,
+  "data_share_max": 0.9999979699685024,
+  "source_checkpoint": "checkpoints/v3/best.pt",
+  "source_checkpoint_md5": "2f911b8f104e4af70ba5d9bd9c8f0fc9",
+  "fit_seed": 0,
+  "target_layer": "final_conv",
+  "likelihood": "bernoulli",
+  "curvature": "GGN, per-pixel mean, tempered by n_eff",
+  "bald": "exact quadrature (Gauss-Hermite on expected-KL form / split + Gauss-Laguerre / series)"
+}

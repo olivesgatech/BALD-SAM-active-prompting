@@ -1,0 +1,89 @@
+data:
+  images_root: /path/to/images_root
+  masks_root: /path/to/masks_root
+  project_root: /path/to/project_root
+  split_seed: 123
+  train_frac: 0.8
+  val_frac: 0.1
+  test_frac: 0.1
+  head_checkpoint: checkpoints/v5/best.pt
+  laplace_dir: checkpoints/v5/laplace_released
+prompt_generation:
+  num_promptsets_train: 10
+  num_promptsets_val: 4
+  num_promptsets_test: 4
+  min_pairs: 1
+  max_pairs: 10
+  prompt_seed: 777
+  gaussian_sigma: 8
+sam:
+  checkpoint: /path/to/sam_vit_h_4b8939.pth
+  model_type: vit_h
+  device: cuda
+  multimask_output: true
+  select_by: sam_score
+head:
+  variant: dilated_v5
+  channels_in: 3
+  hidden_channels: 32
+  dilations:
+  - 1
+  - 2
+  - 4
+  - 1
+  dropout_rate: 0.0
+training:
+  batch_size: 64
+  num_epochs: 50
+  lr: 0.001
+  weight_decay: 0.0001
+  dice_lambda: 1.0
+  amp: true
+  early_stop_patience: 10
+  logit_clip: 20.0
+  target_size:
+  - 256
+  - 256
+  scheduler: cosine
+  scheduler_min_lr: 1.0e-06
+  scheduler_plateau_patience: 3
+  ram_resident: true
+  num_workers: 8
+  prefetch_factor: 2
+hdf5:
+  use_hdf5: true
+  chunk_size: 64
+laplace:
+  enabled: true
+  target_layer: final_conv
+  approx: diagonal
+  prior_precision_grid:
+  - 0.0001
+  - 0.001
+  - 0.01
+  - 0.1
+  - 1.0
+  - 10.0
+  effective_n_grid: null
+  bald_mc_samples: 20
+  sweep_max_images: 96
+  fisher_n_mc: 1
+  fisher_max_batches: null
+ensemble:
+  n_members: 10
+  seeds:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+wandb:
+  enabled: false
+  project: laplace-head-sam
+  entity: null
+  group: v5

@@ -1,0 +1,11 @@
+{
+  "run_id": "v5_m8",
+  "seed": 9,
+  "head": "DilatedHeadV5",
+  "n_params": 28673,
+  "best_val_iou": 0.7009022057056427,
+  "sam_baseline_val_iou": 0.6513840436935425,
+  "iou_over_sam": 0.04951816201210013,
+  "epochs_run": 47,
+  "data_mode": "ram"
+}
