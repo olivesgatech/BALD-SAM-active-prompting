@@ -12,6 +12,7 @@ head / SAM mask got wrong.
 Variants (comma-separated --variants, or the default grid):
   entropy                 released entropy baseline (probit predictive, released NLL posterior)
   entropy_map             entropy of the head's MAP probability (any head)
+  sam_entropy             entropy of SAM's own logits (no head; baseline)
   ens                     deep-ensemble BALD over --ensemble members (MI across heads)
   bald_released           released diagonal BALD posterior, exact BALD (K -> infinity)
   random
@@ -108,6 +109,11 @@ class Variant:
         """Return acquisition map (256, 256) numpy float64; None for random."""
         if self.kind == "random":
             return None
+        if self.kind == "sam_entropy":
+            # SAM's own predictive entropy from its logits (channel 0 of the head input); no head involved
+            l = self._x[0, 0].double()
+            return (torch.sigmoid(l) * torch.nn.functional.softplus(-l)
+                    + torch.sigmoid(-l) * torch.nn.functional.softplus(l)).cpu().numpy()
         if self.kind == "entropy_map":
             return binary_entropy(torch.sigmoid(map_logits).squeeze()).double().cpu().numpy()
         if self.kind == "ens":
