@@ -58,6 +58,33 @@ Short sessions (AUC over the first 9 added prompts, 16 px exclusion):
 C 0.091, B 0.080, entropy (v5) 0.072. On Salt_dome, B leads over the first 9
 prompts with either radius (0.118-0.123 vs 0.083-0.087 for C).
 
+## Uncertainty quality (independent of prompting)
+
+How well each map predicts where independently trained models disagree: Spearman
+correlation, per input, with the mutual-information map of 5 held-out v5 heads
+(trained like `v5_ensemble` but not used by any method). 300 PointPrompt test
+inputs (ID) and 780 shifted inputs (SAM2 / SAM3 / medically fine-tuned SAM
+logits on the same images, SAM1 on chest X-ray and retinal images).
+
+| Uncertainty map | ID | shifted |
+|---|---|---|
+| ensemble BALD, 5 heads | **0.574** | **0.587** |
+| entropy, v5 head | 0.527 | 0.566 |
+| B: BALD-Laplace, v5 head | 0.516 | 0.567 |
+| full-head diagonal Laplace, v5 (50 samples) | 0.410 | 0.526 |
+| A: BALD-Laplace, v3 head | 0.399 | 0.456 |
+| MC dropout, v5 head (50 samples) | 0.392 | 0.335 |
+| earlier diagonal BALD-Laplace, v3 head | 0.302 | 0.223 |
+
+Correlation of the predictive logit std with ||phi|| (1.0 = the variance is just
+the feature norm): earlier diagonal fit 1.00, A 0.74, B 0.45.
+
+Known behaviour: all of these maps, including the ensemble's, are concentrated
+near the most recently added prompt (about 10x that region's share of the image
+for B and for the ensemble). The heads were trained with prompts sampled inside
+foreground and background, so prompts placed on object boundaries are outside
+the training distribution and the models genuinely disagree next to them.
+
 ## Install
 
     pip install -r requirements.txt
