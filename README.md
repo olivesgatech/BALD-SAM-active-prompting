@@ -48,9 +48,11 @@ Paired comparisons over the 147 images (bootstrap 95% CI, permutation p):
 * B vs entropy on the same head: AUC +0.007, p = 0.60 (no detectable difference).
 * A vs entropy on the v3 head: AUC -0.026, p = 0.03. On the v3 head the corrected posterior does not beat entropy; the stronger head is what makes BALD competitive.
 
-Validation (49 PointPrompt validation images, 20 prompts) reproduces these:
-B vs C AUC -0.001 (p = 0.96); B vs earlier diagonal BALD-Laplace +0.046 (p = 0.002);
-A vs entropy on the v3 head -0.042 (p = 0.06).
+Validation (68 PointPrompt validation images, 20 prompts): B vs C AUC -0.010
+(p = 0.65) and B vs entropy on the v5 head -0.010 (p = 0.68), no detectable
+difference, as on test. B vs the earlier diagonal BALD-Laplace (+0.014, p = 0.44)
+and A vs entropy on the v3 head (-0.006, p = 0.77) are not significant on
+validation, so treat those two test-set differences as less certain.
 
 Short sessions (AUC over the first 9 added prompts, 16 px exclusion):
 C 0.091, B 0.080, entropy (v5) 0.072. On Salt_dome, B leads over the first 9
