@@ -5,8 +5,7 @@ frozen SAM (ViT-H). A small head reads `[SAM logits, positive-prompt map,
 negative-prompt map]` at 256 x 256 and outputs refined logits; uncertainty over
 the head drives the choice of the next prompt.
 
-This release adds a corrected BALD-Laplace posterior and packages three options
-with trained checkpoints. Method details: [BALD_LAPLACE.md](BALD_LAPLACE.md).
+
 
 ## Options
 
